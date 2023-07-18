@@ -1,0 +1,91 @@
+---
+title: "SpillaneFunctionTutorial"
+author: "Patrick Spillane"
+date: "2023-06-27"
+output: html_document
+---
+# Function #1
+
+fishualize::fish
+This function is meant to create a vector of 'n' equally spaced colors for the fish that you selected. The colors of the fish are indicated by something known as a "fish colormap".
+
+## Argument Description
+
+n= This represents the number of colors that are going to be shown in the color palette, for example, making n equal 1 would mean that there would be one color selected and in turn, one hexadecimal code produced.
+
+alpha= This decides whether or not a color is to be deemed transparent or opaque, with 0 being transparent, and 1 being opaque
+
+begin= the corrected hue (a color with no tint or shade, aka a color in its purest form) where the colormap begins
+
+end= same with with the begin argument but instead it is where the colormap ends.
+
+option= This is where you write a character string, specifically for this function the scientific name of the fish species you desire to analyze, with an underscore in place of a space between the genus name and species name, to help determine the function which colors are present on the fish. The list of fish and their scientific names can be accessed by the fishcolors function.
+
+
+# Fishualize::
+```{r fxn-example-1}
+
+library(fishualize)
+library(dplyr)
+
+dplyr::glimpse(fishualize::fishcolors)
+
+fishhexa<-fishualize::fish(n=5,#This part of the code tells us how many hexadecimal color codes will be shown 
+  
+  alpha = 1, # This determines whether the color will be transparent or opaque
+  
+  begin = 0, #This determines the specific hue where the map begins
+  
+  end = 1, #This determines which hue at which the colormap ends
+  
+  direction = 1, #This determines the order of which the colors are listed
+  
+  option = "Minilabrus_striatus") #Option is choosing which fish species you want, for this experiment I chose the Minute Wrassle as it is very vibrant with several distinct colors on its body.
+
+dplyr::glimpse(fishhexa) #This allows us to se which hexidecimal codes are determined by the species of fish
+
+#This specific function has many uses, namely it can be used to put the colors in parts of a graph made with ggplot for instance. With fishualize::fish, you can customize the color of text or data plots through the implementation of the hexadecimal codes provided. For example, fishualize fish is more useful for a line of code such as this "theme(panel.background = element_blank(), axis.line = element_line(color =...)" because hexadecimal color codes are more suited for the custimization of certain points, such as the aforementioned text or bars in a graph for instance, whereas fishualize::fishualize only shows the colors in a picture, and is more for samples of seeing what the colors actually look like, to determine if you would actually want to use said color palette, with fishualize::fishcolors is more for the actual proper use of said colors.
+
+```
+
+The hexidecimal codes above are representations of certain colors that are apparent in the species selected (in this case the Minute Wrassle)
+
+# Function 2
+
+fishualize::fishualize
+
+## Arguments
+
+option= Similar to fishualize::fish, this is where you put the species of the fish you wish to see the colors of.
+
+n= This will be to determine the number of colors that will be shown in the palette
+
+There are also many other arguments that align with both fishualize::fish and fishualize::fishualize, for example, alpha, begin, end, and direction
+
+```{r fxn-example-2}
+
+fishualize::fishualize(option = "Minilabrus_striatus", n = 10, direction = -1) 
+
+# Unlike fishualize::fish, which only gave the hexadecimal color codes to show which colors are actually apart of the palette, n determines how many colors will be shown in the palette, once again for the sake of consistency, and since the direction is -1, it goes in the opposite order as the fishualize::fish example.
+
+# This function would be more used to show examples of what colors would look like from a selected group of species. While with the first function it was to give the hexadecimal codes that co-align with the associated colors. That would be more useful with creating custom colors for data points and plots written in R.
+```
+
+# Function 3
+
+fishbc::fbc_common_name
+
+## Arguments
+
+x= This is a character vector which tells you the common name of a given fish species which is determined by which fish code you put in.
+
+```{r fxn-example-3}
+library(fishbc)
+
+dplyr::glimpse(fishbc::freshwaterfish)
+
+fishbc::fbc_common_name(c("LSU", "BSU", "MSU", "SH"))#These codes are shortened versions of certain fishes' common names, for example LSU, BSU, and MSU are all codes for different species of Sucker fish. SH is the code for the American Shad.
+
+```
+
+

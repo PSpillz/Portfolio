@@ -1,0 +1,24 @@
+---
+title: "Spillane_Week7_316"
+author: "Patrick Spillane"
+date: "2023-07-17"
+output: html_document
+---
+```{r pkg load}
+fahrenheit<-(c(35, 45, 55, 65, 75, 85,95)) #These are the example numbers that will be converted from fahrenheit
+
+for (i in fahrenheit) { #This is to start the process of converting Fahrenheit to Celcius
+  
+  temp_converter<-(i-32)*5/9 #This is the equation for converting the degrees in Fahrenheit to Celcius
+  
+  print( paste(temp_converter, "Degrees Celcius"))#This tells the degrees in Celcius
+  
+  if(temp_converter<=18) {print( paste(i, "Degrees Fahrenheit. It will be chilly bring a jacket"))}#This makes it if the temperature is less than 18 degrees celcius it tells you to bring a jacket
+  
+  if(temp_converter>=23) {print( paste(i, "Degrees Fahrenheit. It will be hot out wear shorts"))}#This makes it if the temperature is more than 23 degrees celcius it tells you wear shorts instead of regular pants
+  
+  if(temp_converter>=18 & temp_converter<=23){print( paste(i, "Degrees Fahrenheit. Do not bring either a jacket or shorts for it is moderate weather"))}
+#This makes it if the temperature is more than 18 but less than 23 it tells you to not take any precautions for the weather
+  }
+
+```
