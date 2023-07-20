@@ -1,0 +1,80 @@
+---
+title: "Spillane_316_Week_6"
+author: "Patrick Spillane"
+date: "2023-07-10"
+output: html_document
+---
+
+```{r pkg-load}
+#1A
+library(palmerpenguins)#This is the source of the data used
+
+library(ggplot2)#This is for the creation of the graph
+
+library(dplyr)#This is for filtering the data and avoiding the N/A legend
+
+penguindata<-penguins %>%#This is to make the data more specific
+
+
+    dplyr::filter(is.na(sex) !=TRUE & is.na(flipper_length_mm) !=TRUE) # This is to remove any individuals of a species whose sex is not recorded
+  
+penguin_plot<-ggplot(data = penguindata, mapping = aes(x = sex, y = flipper_length_mm, fill=sex))+#This is to assign each axis their own data set, penguindata was used instead of the pure raw data to avoid the n/a legend 
+  
+  geom_violin()#This is how the data will be shown in the graph
+
+labs(x= "Sex", y = "Flipper Length (mm)") #This names the axis the respective names
+
+penguin_plot#This is to show off the graph
+```
+```{r}
+#1B
+
+library(palmerpenguins)#This is the source of the data used
+
+library(ggplot2)#This is for the creation of the graph
+
+library(dplyr)#This is for filtering the data and avoiding the N/A legend
+
+penguindata<-penguins %>%#This is to make the data more specific
+
+    dplyr::filter(is.na(sex) !=TRUE & is.na(flipper_length_mm) !=TRUE) # This is to remove any individuals of a species whose sex is not recorded, so that there is no third legend in the plot, only male and female
+  
+penguin_plot<-ggplot(data = penguindata, mapping = aes(x = sex, y = flipper_length_mm, fill = sex)) +
+  
+  geom_violin()+
+
+  labs(x= "Sex", y = "Flipper Length (mm)")+
+  
+  theme(panel.background = element_blank(), axis.line = element_line(color = "black"))+#This is to remove the background color and makes the axis colors black
+  
+  facet_grid(.~ species)#This is to divide the data into three columns divided by which species is being represented
+
+penguin_plot#This is to show the overall graph
+```
+
+```{r}
+#2A+2B
+
+library(palmerpenguins)#This is the source of the data used
+
+library(ggplot2)#This is for the creation of the graph
+
+penguin_plot2<-ggplot(data = penguindata, mapping = aes(x = flipper_length_mm, y = island, fill=island)) +
+  
+  geom_violin()+
+
+  labs(x= "Flipper Length (mm)", y = "Islands")+#This is to name the axis
+  
+  theme(panel.background = element_blank(), axis.line = element_line(color = "black"))+#Again this remove the background colors and give the axis colors
+  
+  scale_fill_manual(values = c("Biscoe"="#ef476f","Dream"="#06d6a0","Torgersen"="#03045e"))#These custom colors were chosen to differentiate each set of data depending on the islands
+  
+penguin_plot2
+```
+
+```{r}
+#3
+library(cowplot)#This is to run the program that combines the plots
+fullpenguinplot<-cowplot::plot_grid(penguin_plot, penguin_plot2, ncol = 1, nrow = 2)#This is to set up the graph with 1 column and 2 rows
+fullpenguinplot #This is to show the combined plot
+```
