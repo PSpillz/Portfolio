@@ -1,0 +1,42 @@
+---
+title: "Spillane_Week5"
+author: "Patrick Spillane"
+date: "2023-07-04"
+output: html_document
+---
+```{r pkg load}
+library(palmerpenguins)
+
+library(dplyr)
+#1
+penguindata<-penguins %>%
+  dplyr::filter(is.na(sex) !=TRUE & is.na(species) !=TRUE) # This is to remove any individuals of a species whose sex is not recorded
+  
+penguin_plot<-ggplot(data = penguindata, mapping = aes(x = sex, y = flipper_length_mm, fill=sex)) +
+  geom_violin()
+labs(x= "Sex", y = "Flipper Length (mm)")
+penguin_plot
+peng_fl<-aov(flipper_length_mm ~ sex + species + sex:species, data = penguindata) #This type of test is to allow the sex and species data sets to interact. 
+
+#ANCOVA is the best statistical test for this type of experiment as ANCOVA is tailored for tests that require the two variables to be interacting with each other.
+
+summary(peng_fl) #This shows that we can reject the null hypothesis as the p-value is less than 0,05 for all three, thus it is considered significant.
+```
+
+```{r}
+#2
+penguindata2<-penguins %>%
+  dplyr::filter(is.na(sex) !=TRUE & is.na(species) !=TRUE & is.na(island) !=TRUE)#This is to include the island part of the data set, so that no penguins who do not have their island recorded are included.
+
+peng_all<-aov(flipper_length_mm ~ sex + species + island + sex:species + sex:island + species:island, data = penguindata2)#This is the test with interaction
+
+peng_some<-peng_all<-aov(flipper_length_mm ~ island + sex + species + sex*species, data = penguindata2)#This is the test without interaction
+
+summary(peng_all)
+
+summary(peng_some)
+
+summary(peng_fl)#These are to check the p-values of all three stat tests.
+
+AIC(peng_all, peng_some, peng_fl)#This test is to compare each data test to see which test is the most appropriate. The difference between peng_fl and both peng_all and peng_some since their AIC numbers are identical are 1.799, which since it is less than 2, that means that islands do not seem like an important contributing factor in the statistical test.
+```
